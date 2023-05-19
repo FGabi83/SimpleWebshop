@@ -1,64 +1,87 @@
-const UI = function () {
-  this.Image = ".js-product-image";
-  this.Name = ".js-product-name";
-  this.Category = ".js-product-category";
-  this.Description = ".js-product-description";
-  this.Price = ".js-product-price";
-  
-  this.imageSelector = document.querySelector(this.Image);
-  this.nameSelector = document.querySelector(this.Name);
-  this.categorySelector = document.querySelector(this.Category);
-  this.descriptionSelector = document.querySelector(this.Description);
-  this.priceSelector = document.querySelector(this.Price);
+// UI class for changing the user interface
+class UI {
+
+  constructor (node) {
+    // this is basically our configuration,
+    // the part that might have to change when the HTML changes:
+    // gathering the selectors for the elements we will be working with
+    this.node = node;
+    this.productImageSelector = ".js-product-image";
+    this.productNameSelector = ".js-product-name";
+    this.productCategorySelector = ".js-product-category";
+    this.productDescriptionSelector = ".js-product-description";
+    this.productPriceSelector = ".js-product-price";
+
+    // using the selectors above, we store the elements in private variables
+    this.productImageElement = this.node.querySelector(this.productImageSelector);
+    this.productNameElement = this.node.querySelector(this.productNameSelector);
+    this.productCategoryElement = this.node.querySelector(this.productCategorySelector);
+    this.productDescriptionElement = this.node.querySelector(this.productDescriptionSelector);
+    this.productPriceElement = this.node.querySelector(this.productPriceSelector);
+  }
+
+  // this is the API for our UI objects:
+  // methods to change the UI by only changing the
+  // content of the stored elements
+  setProductImage (src) {
+    this.productImageElement.src = src;
+  };
+  setProductName (name) {
+    this.productNameElement.textContent = name;
+  };
+  setProductCategory (category) {
+    this.productCategoryElement.textContent = category;
+  };
+  setProductDescription (description) {
+    this.productDescriptionElement.textContent = description;
+  };
+  setProductPrice (price) {
+    this.productPriceElement.textContent = price;
+  };
+  // we need a new method to append the cloned product elements to the list
+  appendTo (listElement) {
+    listElement.appendChild(this.node);
+  }
 };
-    
-  
-    UI.prototype.setImage = function (src) {
-      this.imageSelector.src = src;
-    };
-   UI.prototype.setName = function (name) {
-      this.nameSelector.textContent = name;
-    };
-   UI.prototype.setCategory= function (category) {
-     this.categorySelector.textContent = category;
-    };
-   UI.prototype.setDescription = function (description) {
-     this.descriptionSelector.textContent = description;
-    }; 
-   UI.prototype.setPrice = function (price) {
-     this.priceSelector.textContent = price;
-    }; 
-  
+
+// Product class for gathering product related info
+class Product {
+
+  constructor (productInfo) {
+    this.name = productInfo.name;
+    this.category = productInfo.category;
+    this.description = productInfo.description;
+    this.imageSrc = productInfo.imageSrc;
+    this.price = productInfo.price;
+  }
+
+  // API for Product objects for getting product info
+  getName () {
+    return this.name;
+  }
+  getCategory () {
+    return this.category;
+  }
+  getDescription () {
+    return `${this.name} is ${this.description}.`;
+  }
+  getImage () {
+    return this.imageSrc;
+  }
+  getPrice () {
+    return `€${this.price}`;
+  }
+};
 
 
-const Product = function () {
-    this.name = "DisCatcher Target";
-  this.category = " Discgolf";
-  this.description =
-    "a chain grid that catches fast and slow putts, heavy and light discs like no other target";
-  this.image = "images/discatcher.jpg";
-  this.price = 399;
-};
-  
-  Product.prototype.getImage = function () {
-     return this.image;
-    };
-    Product.prototype.getName = function () {
-      return this.name;
-    };
-    Product.prototype.getCategory = function () {
-      return this.category;
-    };
-    Product.prototype.getDescription = function () {
-      return `${this.name} is ${this.description}`;
-    };
-    Product.prototype.getPrice = function () {
-      return `€${this.price}`;
-    };
- 
-  
- const DiscgolfProduct = new Product(); 
-  
+// set up first product
+const DiscgolfProduct = new Product({
+  name: "DisCatcher Target",
+  category: " Discgolf",
+  description: "a chain grid that catches fast and slow putts, heavy and light discs like no other target",
+  imageSrc: "images/discatcher.jpg",
+  price: 399
+});
 
 const productImage = DiscgolfProduct.getImage();
 const productName = DiscgolfProduct.getName();
@@ -66,10 +89,44 @@ const productCategory = DiscgolfProduct.getCategory();
 const productDescription = DiscgolfProduct.getDescription();
 const productPrice = DiscgolfProduct.getPrice();
 
-const ShopUI = new UI(); 
+// set up first product on the UI
+const UITemplate = document.querySelector(".js-product");
+const ShopUI = new UI(UITemplate);
 
-ShopUI.setImage(productImage);
-ShopUI.setName(productName);
-ShopUI.setCategory(productCategory);
-ShopUI.setDescription(productDescription);
-ShopUI.setPrice(productPrice);
+ShopUI.setProductImage(productImage);
+ShopUI.setProductName(productName);
+ShopUI.setProductCategory(productCategory);
+ShopUI.setProductDescription(productDescription);
+ShopUI.setProductPrice(productPrice);
+
+//set up second product
+
+const DiscgolfProduct2 = new Product({
+  name: "Hero SuperAero",
+  category: " Discgolf",
+  description: "a disc that floats like a butterfly, holds up like a SuperHero",
+  imageSrc: "images/dog.jpg",
+  price: 14
+});
+
+const productImage2 = DiscgolfProduct2.getImage();
+const productName2 = DiscgolfProduct2.getName();
+const productCategory2 = DiscgolfProduct2.getCategory();
+const productDescription2 = DiscgolfProduct2.getDescription();
+const productPrice2 = DiscgolfProduct2.getPrice();
+
+//set up second product on the UI
+
+const UIElement2 = UITemplate.cloneNode(true);
+const ShopUI2 = new UI(UIElement2);
+
+ShopUI2.setProductImage(productImage2);
+ShopUI2.setProductName(productName2);
+ShopUI2.setProductCategory(productCategory2);
+ShopUI2.setProductDescription(productDescription2);
+ShopUI2.setProductPrice(productPrice2);
+
+const ProductListElement = document.querySelector(".js-product-list");
+ShopUI2.appendTo(ProductListElement);
+
+
