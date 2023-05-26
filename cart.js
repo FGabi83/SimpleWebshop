@@ -9,12 +9,14 @@
       // to append rows to,
       // so only one element reference to store:
       this.container = element;
+      PubSub.subscribe("updateCart", (products) => this.updateCart(products));
     }
 
     // this is a "private" method, meant to be used from other methods only
     // hence the _
     _rowTemplate(productData) {
-      return `<tr><td>${productData.name}</td><td class="has-text-right">€${productData.price}</td></tr>`;
+      
+      return `<tr><td>${productData.name}</td><td class="has-text-right">${productData.price}</td></tr>`;
     }
 
     // build HTML based on product data and row template
@@ -41,11 +43,15 @@
   class Cart {
     constructor() {
       this.items = [];
+      
+    PubSub.subscribe("addToCart", (item) => this.addItem(item));
     }
 
     // API for Cart object
     addItem(item) {
       this.items.push(item);
+      PubSub.publish("updateCart", this.getItems());
+      
     }
     getItems() {
       return this.items;

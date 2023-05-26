@@ -10,7 +10,7 @@ class ProductUI {
     this.productCategorySelector = ".js-product-category";
     this.productDescriptionSelector = ".js-product-description";
     this.productPriceSelector = ".js-product-price";
-    
+    this.productButtonSelector = ".js-product-button";
     
     this.node = templateElement.cloneNode(true);
     parentElement.appendChild(this.node);
@@ -22,6 +22,17 @@ class ProductUI {
     this.productCategoryElement = this.node.querySelector(this.productCategorySelector);
     this.productDescriptionElement = this.node.querySelector(this.productDescriptionSelector);
     this.productPriceElement = this.node.querySelector(this.productPriceSelector);
+    this.productButtonElement = this.node.querySelector(this.productButtonSelector);
+  
+  
+  //add event listeners
+  
+  this.productButtonElement.addEventListener("click", this.handleClick);
+  }
+    
+  handleClick(){
+    const productData = this.dataset;
+    PubSub.publish("addToCart", productData);
   }
 
   // this is the API for our UI objects:
@@ -51,6 +62,9 @@ class ProductUI {
     this.productCategoryElement.textContent = productInfo.category;
     this.productDescriptionElement.textContent = productInfo.description;
     this.productPriceElement.textContent = productInfo.price;
+    // data for the event handler
+    this.productButtonElement.dataset.name = productInfo.name;
+    this.productButtonElement.dataset.price = productInfo.price;
   }
   
 };

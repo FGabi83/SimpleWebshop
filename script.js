@@ -38,14 +38,10 @@ const ShopUI2 = new ProductUI(UITemplate, ProductListElement);
 ShopUI2.setUp(productInfo2);
 
 UITemplate.remove();
-  
-// test out cart
+
+// initialize cart
 const cartContainer = document.querySelector(".js-cart");
 const cartUI = new CartUI(cartContainer);
 const cart = new Cart();
-
-cart.addItem({ name: "test item", price: 1 });
-const cartItems = cart.getItems();
-cartUI.updateCart(cartItems);
   
 })();
