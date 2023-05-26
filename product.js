@@ -1,9 +1,10 @@
-// UI class for changing the user interface
-(function(){
-class ProductUI {
 
-  constructor (templateElement, parentElement) {
-    
+(function(){
+
+
+class ProductUI {
+  
+  constructor(templateElement, parentElement) {
     
     this.productImageSelector = ".js-product-image";
     this.productNameSelector = ".js-product-name";
@@ -11,11 +12,12 @@ class ProductUI {
     this.productDescriptionSelector = ".js-product-description";
     this.productPriceSelector = ".js-product-price";
     this.productButtonSelector = ".js-product-button";
-    
+
+    // clone the template to create a new DOM element
     this.node = templateElement.cloneNode(true);
+    // and append the new DOM element to the end of the product list
     parentElement.appendChild(this.node);
-      
-      
+
     // using the selectors above, we store the elements in private variables
     this.productImageElement = this.node.querySelector(this.productImageSelector);
     this.productNameElement = this.node.querySelector(this.productNameSelector);
@@ -23,14 +25,13 @@ class ProductUI {
     this.productDescriptionElement = this.node.querySelector(this.productDescriptionSelector);
     this.productPriceElement = this.node.querySelector(this.productPriceSelector);
     this.productButtonElement = this.node.querySelector(this.productButtonSelector);
-  
-  
-  //add event listeners
-  
-  this.productButtonElement.addEventListener("click", this.handleClick);
+
+    // add event listeners
+    this.productButtonElement.addEventListener("click", this.handleClick);
   }
-    
-  handleClick(){
+
+  handleClick () {
+    // "this" will refer to the clicked button here
     const productData = this.dataset;
     PubSub.publish("addToCart", productData);
   }
@@ -53,10 +54,9 @@ class ProductUI {
   setProductPrice (price) {
     this.productPriceElement.textContent = price;
   }
-  
-  // method to setUp UI in one go
-  
-  setUp(productInfo) {
+
+  // let's add a method that sets our UI up in one go
+  setUp (productInfo) {
     this.productImageElement.src = productInfo.image;
     this.productNameElement.textContent = productInfo.name;
     this.productCategoryElement.textContent = productInfo.category;
@@ -66,12 +66,11 @@ class ProductUI {
     this.productButtonElement.dataset.name = productInfo.name;
     this.productButtonElement.dataset.price = productInfo.price;
   }
-  
 };
 
 // this way the other JS files can also use this class
 window.ProductUI = ProductUI;
-  
+
 // Product class for gathering product related info
 class Product {
 
@@ -99,22 +98,19 @@ class Product {
   getPrice () {
     return `€${this.price}`;
   }
-  
-  //API for getting product info in one go
-  
-  getInfo() {
+  // let's add a method that returns all that
+  getInfo () {
     return {
-     name : this.name,
-     category: this.category,
-     description :`${this.name} is ${this.description}`,
-     image : this.imageSrc,
-     price : `€${this.price}`
+      name: this.name,
+      category: this.category,
+      description: `${this.name} is ${this.description}.`,
+      image: this.imageSrc,
+      price: `€${this.price}`
     };
   }
 };
 
 // this way the other JS files can also use this class
 window.Product = Product;
-
 
 })();
