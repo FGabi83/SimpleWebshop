@@ -1,12 +1,11 @@
-// start with an IIFE to keep the global namespace clean
+
 (function(){
   class ShopController {
     constructor(productList) {
       this.productList = productList;
       this.UITemplate = document.querySelector(".js-product");
       this.ProductListElement = document.querySelector(".js-product-list");
-      // we stored the template in a variable
-      // so now we can remove it from the live DOM
+      
       this.UITemplate.remove();
 
       // initialize products
