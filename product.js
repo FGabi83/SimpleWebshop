@@ -34,6 +34,7 @@ class ProductUI {
     // "this" will refer to the clicked button here
     const productData = this.dataset;
     PubSub.publish("addToCart", productData);
+    
   }
 
   // this is the API for our UI objects:

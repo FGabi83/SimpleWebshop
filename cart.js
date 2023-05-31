@@ -1,4 +1,7 @@
 (function () {
+  
+ 
+  
   // UI class for changing the user interface
   class CartUI {
     // we only have one cart,
@@ -57,6 +60,8 @@
       return this.items;
     }
   }
+
+  
 
   // this way the other JS files can also use this class
   window.Cart = Cart;

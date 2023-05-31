@@ -17,7 +17,14 @@
       this.cartContainer = document.querySelector(".js-cart");
       this.cartUI = new CartUI(this.cartContainer);
       this.cart = new Cart();
+      
+      //initialize Total
+    this.totalPrice = document.querySelector(".js-total");
+      this.totalView = new TotalView(this.totalPrice);
+      this.totalModel = new TotalModel();
     }
+    
+    
 
     _initProduct(productData) {
       const newProduct = new Product(productData);
